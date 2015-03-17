@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/open_a"
-        android:id="@+id/btnOpen"
+        android:id="@+id/btnOpenA"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
@@ -19,6 +19,6 @@
         android:layout_height="wrap_content"
         android:text="@string/close_b"
         android:id="@+id/btnClose"
-        android:layout_below="@+id/btnOpen"
+        android:layout_below="@+id/btnOpenA"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

@@ -11,78 +11,100 @@ import android.widget.Button;
 
 
 public class ActivityA extends ActionBarActivity {
-    private final String DATA="data";
+
+    private final String DATA = "data";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_a);
-        Log.d("CHANGE","ActivityA onCreate()");
-        if(savedInstanceState!=null){
-            String data=savedInstanceState.getString(DATA);
-            Log.d("CHANGE","ActivityA data"+data);
+
+        Log.d("CHANGE", "ActivityA onCreate");
+
+        if (savedInstanceState != null) {
+            String data = savedInstanceState.getString(DATA);
+            Log.d("CHANGE", "ActivityA onCreate saved data: " + data);
         }
-        Button btnOpenB= (Button)findViewById(R.id.btnOpen);
-        Button btnClose= (Button)findViewById(R.id.btnClose);
+        Button btnOpenB = (Button) findViewById(R.id.btnOpenB);
+        Button btnClose = (Button) findViewById(R.id.btnClose);
+
         btnOpenB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("CHANGE","ActivityA onClick()");
-                Intent openB=new Intent(ActivityA.this,ActivityB.class);
+                Log.d("CHANGE", "ActivityA onClick()");
+
+                Intent openB = new Intent(ActivityA.this, ActivityB.class);
                 startActivity(openB);
+
             }
         });
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("CHANGE","ActivityA close");
-                Intent openB=new Intent(ActivityA.this,ActivityB.class);
-                startActivity(openB);
+                Log.d("CHANGE", "ActivityA onClick()");
                 finish();
             }
         });
     }
 
     @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        Log.d("CHANGE", "ActivityA onRestoreInstanceState");
+
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        Log.d("CHANGE", "ActivityA onSaveInstanceState");
+        outState.putString(DATA, "datos");
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
-        Log.d("CHANGE","ActivityA onStart()");
+
+        Log.d("CHANGE", "ActivityA onStart");
     }
+
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("CHANGE", "ActivityA onRestart()");
+
+        Log.d("CHANGE", "ActivityA onRestart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Log.d("CHANGE", "ActivityA onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("CHANGE","ActivityA onPause()");
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("CHANGE","ActivityA onResume()");
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d("CHANGE","ActivityA onStop()");
+
+        Log.d("CHANGE", "ActivityA onPause");
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        Log.d("CHANGE","ActivityA onSaveInstanceState()");
-        outState.putString(DATA,"datos");
-        super.onSaveInstanceState(outState);
+    protected void onStop() {
+        super.onStop();
+
+        Log.d("CHANGE", "ActivityA onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("CHANGE","ActivityA onDestroy()");
+
+        Log.d("CHANGE", "ActivityA onDestroy");
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
