@@ -36,10 +36,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private String numero1 ="";
     private String numero2 = "";
     private double resultado=0.0;
+    private final String key = "data";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //para crear botones con for
+        //getIdentifier()..
+
         setContentView(R.layout.activity_main);
         pantalla = (TextView) findViewById(R.id.textView);
         pantalla.setOnClickListener(this);
@@ -106,7 +110,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     operacion = "-";
                     break;
                 case R.id.btnIgual:
-                    Log.d("igual", calcLogic.getTotalString());
                     hacerOperacion();
                     pantalla.setText(calcLogic.getTotalString());
                     operacion="";
@@ -117,18 +120,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     break;
                 case R.id.btn0:
                     if (operacionPulsada()) {
-                        Log.d("prueba","hemen");
                         numero2=numero2.concat("0");
                         pantalla.setText(numero2);
 
                     } else {
-                        Log.d("prueba","hemen2");
                         numero1=numero1.concat("0");
                         pantalla.setText(numero1);
                     }
-
-                    Log.d("aa", numero1);
-                    Log.d("aa", numero2);
 
                     break;
                 case R.id.btn1:
@@ -259,6 +257,29 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             calcLogic.setTotal(resultado);
 
         }
+    }
+    //para guardar datos
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString(key,calcLogic.getTotalString());
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        String data=savedInstanceState.getString(key);
+        numero1=data;
+        pantalla.setText(data);
+
+    }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
 
