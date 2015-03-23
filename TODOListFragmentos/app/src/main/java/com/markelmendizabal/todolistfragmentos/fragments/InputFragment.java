@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.markelmendizabal.todolistfragmentos.R;
+import com.markelmendizabal.todolistfragmentos.model.ToDo;
 
 import org.w3c.dom.Text;
 
@@ -21,7 +22,7 @@ import java.util.TooManyListenersException;
  */
 public class InputFragment extends Fragment {
     public interface TODOItemListener{
-    public void addTodo(String todo);
+    public void addTodo(ToDo todo);
 
     }
     private Button btnAdd;
@@ -54,7 +55,7 @@ public class InputFragment extends Fragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String todo=todoText.getText().toString();
+                ToDo todo=new ToDo(todoText.getText().toString());
                 target.addTodo(todo);
 
 
