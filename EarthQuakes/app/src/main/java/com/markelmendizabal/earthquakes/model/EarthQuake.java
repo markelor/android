@@ -1,11 +1,14 @@
 package com.markelmendizabal.earthquakes.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
  * Created by cursomovil on 25/03/15.
  */
-public class EarthQuake {
+public class EarthQuake implements Parcelable {
     private String _id;
     private String place;
     private Date time;
@@ -77,5 +80,40 @@ public class EarthQuake {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(_id);
+        dest.writeString(place);
+        dest.writeLong(time.getTime());
+        dest.writeDouble(magnitude);
+        dest.writeString(url);
+    }
+    public static final Parcelable.Creator<EarthQuake> CREATOR
+            = new Parcelable.Creator<EarthQuake>() {
+
+        public EarthQuake createFromParcel(Parcel in) {
+            return new EarthQuake(in);
+        }
+
+        public EarthQuake[] newArray(int size) {
+            return new EarthQuake[size];
+        }
+    };
+
+    private EarthQuake(Parcel in) {
+        _id=in.readString();
+        place=in.readString();
+        time=new Date(in.readLong());
+        magnitude=in.readDouble();
+        url=in.readString();
+
     }
 }

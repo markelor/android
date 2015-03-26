@@ -26,6 +26,8 @@ import java.util.ArrayList;
 public class DownloadEarthquakeTasks extends AsyncTask<String,EarthQuake,Integer> {
     public interface AddEarthQuakeInterface{
         public void addEarthQuake(EarthQuake earthquake);
+        public void notifyTotall(int total);
+
     }
     private final String EARTHQUAKE="EARTHQUAKE";
     private AddEarthQuakeInterface target;
@@ -35,12 +37,14 @@ public class DownloadEarthquakeTasks extends AsyncTask<String,EarthQuake,Integer
     }
     @Override
     protected Integer doInBackground(String... urls) {
+        Integer count=0;
+
         if(urls.length>0){
-            updateEarthQuake(urls[0]);
+          count= updateEarthQuake(urls[0]);
 
 
         }
-        return null;
+        return count;
     }
 
     @Override
@@ -49,7 +53,15 @@ public class DownloadEarthquakeTasks extends AsyncTask<String,EarthQuake,Integer
         target.addEarthQuake(earthQuakes[0]);
     }
 
-    private void updateEarthQuake(String eartquakesFedd) {
+    @Override
+    protected void onPostExecute(Integer total) {
+        super.onPostExecute(total);
+        target.notifyTotall(total.intValue());
+
+    }
+
+    private  Integer updateEarthQuake(String eartquakesFedd) {
+        Integer count=0;
         JSONObject json;
         //String eartquakesFedd=getString(R.string.earthquakeurl);
         try{
@@ -69,6 +81,7 @@ public class DownloadEarthquakeTasks extends AsyncTask<String,EarthQuake,Integer
 
                 json = new JSONObject(responseStrBuilder.toString());
                 JSONArray earthquakes = json.getJSONArray("features");
+                count=earthquakes.length();
 
                 for (int i = earthquakes.length()-1; i >= 0; i--) {
                     processEarthQuakeTask(earthquakes.getJSONObject(i));
@@ -86,6 +99,7 @@ public class DownloadEarthquakeTasks extends AsyncTask<String,EarthQuake,Integer
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return count;
     }
 
     private void processEarthQuakeTask(JSONObject jsonObject) {
