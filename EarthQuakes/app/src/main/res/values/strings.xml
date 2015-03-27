@@ -16,5 +16,7 @@
     <string name="auto_updt_descr">Description</string>
     <string name="auto_update_interval">AUTO_UPDATE_INTERVAL</string>
     <string name="auto_update_interval_prompt">AUTO_UPDATE_INTERVAL_PROMT</string>
+    <string name="min_magnitude">MIN_MAGNITUDE</string>
+    <string name="magnitude">MAGNITUDE</string>
 </resources>
 

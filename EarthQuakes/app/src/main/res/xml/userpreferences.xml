@@ -27,9 +27,9 @@
         android:title="@string/earthquake_filters">
         <!--Magnitud minima-->
         <ListPreference
-            android:title="Min Magnitude"
+            android:title="@string/min_magnitude"
             android:summary="Select min Magnitude"
-            android:key="magnitude"
+            android:key="@string/magnitude"
             android:entries="@array/listmagnitude_options"
             android:entryValues="@array/listmagnitude_values" />
 
