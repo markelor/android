@@ -7,8 +7,14 @@
     <string name="title_activity_details">Details</string>
     <string name="num_earthquakes">%d earthquakes processed</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="earthquake_refresh">EarthquakeRefresh</string>
-    <string name="earthquake_filters">EarthquakeFilters</string>
-    <string name="PREF_AUTO_UPDATE">PREF_AUTO_UPDATE</string>
+    <string name="earthquake_refresh">Earthquakes Refresh</string>
+    <string name="earthquake_filters">Earthquakes Filters</string>
+    <string name="feature_id">autorefresh</string>
+    <string name="pref_auto_update">PREF_AUTO_UPDATE</string>
+    <string name="pref_auto_interval">PREF_AUTO_INTERVAL</string>
     <string name="auto_update_promt">AUTO_UPDATE_PROMT</string>
+    <string name="auto_updt_descr">Description</string>
+    <string name="auto_update_interval">AUTO_UPDATE_INTERVAL</string>
+    <string name="auto_update_interval_prompt">AUTO_UPDATE_INTERVAL_PROMT</string>
 </resources>
+
