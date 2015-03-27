@@ -9,33 +9,30 @@
         <SwitchPreference
             android:title="@string/auto_update_promt"
             android:summary="auto_update_desc"
-            android:key="@string/PREF_AUTO_UPDATE"
+            android:key="@string/pref_auto_update"
             android:defaultValue="true" />
-        <!--Frecuencia refresco-->
-        <ListPreferencePreference
-            android:title="Require Pin on Start"
-            android:summary="Require pin to run the application"
-            android:entries="@arrays/magnitude_values"
-            android:entryValues="@arrays/magnitude_options"
-            android:depencency="@string/PREF_AUTO_UPDATE"
-            android:key="@string/pref_require_pin"
-            android:defaultValue="5" />
+            <!--Frecuencia refresco-->
+            <ListPreference
+            android:title="@string/auto_update_interval_prompt"
+            android:summary="Select your favourite"
+            android:key="@string/auto_update_interval"
+            android:entries="@array/listfrecuency_options"
+            android:entryValues="@array/listfrecuency_values"
+            android:dependency="@string/pref_auto_update"
+            android:defaultValue="5"/>
+        
 
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/earthquake_filters">
         <!--Magnitud minima-->
-        <ListPreferencePreference
-            android:title="Require Pin on Start"
-            android:entries="@arrays/update_freg_magnitude_values"
-            android:entryValues="@arrays/update_freg_magnitude_options"
-            android:depencency="@string/PREF_AUTO_UPDATE"
-            android:summary="Require pin to run the application"
-            android:key="@string/pref_require_pin"
-            android:defaultValue="false" />
+        <ListPreference
+            android:title="Min Magnitude"
+            android:summary="Select min Magnitude"
+            android:key="magnitude"
+            android:entries="@array/listmagnitude_options"
+            android:entryValues="@array/listmagnitude_values" />
 
     </PreferenceCategory>
-
-
 
 </PreferenceScreen>
