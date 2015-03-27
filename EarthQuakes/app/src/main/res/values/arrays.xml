@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="update_freg_values">
+    <string-array name="listfrecuency_values">
         <item>1</item>
         <item>5</item>
         <item>10</item>
         <item>15</item>
         <item>60</item>
     </string-array>
-    <string-array name="update_freg_options">
+    <string-array name="listfrecuency_options">
         <item>every minute</item>
         <item>5minutes</item>
         <item>10minutes</item>
         <item>20minutes</item>
         <item>30minutes</item>
     </string-array>
-    <string-array name="update_freg_magnitude_values">
+    <string-array name="listmagnitude_values">
         <item>3</item>
         <item>4</item>
         <item>5</item>
         <item>6</item>
     </string-array>
-    <string-array name="update_freg_magnitude_options">
+    <string-array name="listmagnitude_options">
         <item>every minute</item>
         <item>5minutes</item>
         <item>10minutes</item>
