@@ -2,7 +2,9 @@ package com.markelmendizabal.earthquakes.fragments;
 
 import android.app.ListFragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +25,13 @@ import java.util.ArrayList;
 /**
  * A fragment representing a list of EarthQuake.
  */
-public class EarthQuakeFragment extends ListFragment implements DownloadEarthquakeTasks.AddEarthQuakeInterface {
+public class EarthQuakeFragment extends ListFragment {
     private ArrayList<EarthQuake> arr;
     private ArrayAdapter<EarthQuake> aa;
     public static final String DETAIL_ITEM = "DETAIL_ITEM";
     private final String EARTHQUAKE = "earthquake";
+    private SharedPreferences prefs;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,6 +45,8 @@ public class EarthQuakeFragment extends ListFragment implements DownloadEarthqua
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //cargar preferencias
+        prefs= PreferenceManager.getDefaultSharedPreferences(this.getActivity().getBaseContext());
 
         if (savedInstanceState != null) {
             ArrayList<EarthQuake> tmp = savedInstanceState.getParcelableArrayList(EARTHQUAKE);
@@ -50,10 +56,8 @@ public class EarthQuakeFragment extends ListFragment implements DownloadEarthqua
 
         }
 
-        arr = new ArrayList<EarthQuake>();
-        DownloadEarthquakeTasks task = new DownloadEarthquakeTasks(this);
-        //android crea un thread internamente y llama al doInBackround
-        task.execute(getString(R.string.earthquakeurl));
+
+
         //para que la ejecucion del programa y my Jsoon vayan aparte lanzamos un thread
        /* Thread t=new Thread(new Runnable() {
             @Override
@@ -63,6 +67,11 @@ public class EarthQuakeFragment extends ListFragment implements DownloadEarthqua
         });
         t.start();
 */
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -76,20 +85,5 @@ public class EarthQuakeFragment extends ListFragment implements DownloadEarthqua
     }
 
 
-    @Override
-    public void addEarthQuake(EarthQuake earthquake) {
-        arr.add(0, earthquake);
-        aa.notifyDataSetChanged();
 
-    }
-
-    @Override
-    public void notifyTotall(int total) {
-        // Log.d("a", total);
-        String msg = getString(R.string.num_earthquakes, total);
-        Toast t = Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT);
-        t.show();
-
-
-    }
 }

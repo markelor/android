@@ -1,9 +1,11 @@
 package com.markelmendizabal.earthquakes.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.markelmendizabal.earthquakes.R;
+import com.markelmendizabal.earthquakes.database.EartQuakeDB;
 import com.markelmendizabal.earthquakes.model.Coordinate;
 import com.markelmendizabal.earthquakes.model.EarthQuake;
 
@@ -24,13 +26,19 @@ import java.util.ArrayList;
  * Created by cursomovil on 25/03/15.
  */
 public class DownloadEarthquakeTasks extends AsyncTask<String,EarthQuake,Integer> {
+    private EartQuakeDB eartQuakeDB;
     public interface AddEarthQuakeInterface{
-        public void addEarthQuake(EarthQuake earthquake);
+       // public void addEarthQuake(EarthQuake earthquake);
         public void notifyTotall(int total);
 
     }
     private final String EARTHQUAKE="EARTHQUAKE";
     private AddEarthQuakeInterface target;
+    public DownloadEarthquakeTasks(Context context,AddEarthQuakeInterface target){
+        this.target=target;
+        eartQuakeDB=new EartQuakeDB(context);
+
+    }
     //private ArrayList<EarthQuake> arr;
     public DownloadEarthquakeTasks(AddEarthQuakeInterface target){
         this.target=target;
@@ -47,11 +55,12 @@ public class DownloadEarthquakeTasks extends AsyncTask<String,EarthQuake,Integer
         return count;
     }
 
-    @Override
+    /*@Override
     protected void onProgressUpdate(EarthQuake... earthQuakes) {
         super.onProgressUpdate(earthQuakes);
         target.addEarthQuake(earthQuakes[0]);
     }
+    */
 
     @Override
     protected void onPostExecute(Integer total) {
