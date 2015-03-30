@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.markelmendizabal.earthquakes.fragments.EarthQuakeFragment;
+import com.markelmendizabal.earthquakes.fragments.EarthQuakeListFragment;
 import com.markelmendizabal.earthquakes.model.EarthQuake;
 
 
@@ -24,7 +24,7 @@ public class DetailsActivity extends ActionBarActivity {
        // lblDate= (TextView) findViewById(R.id.lblDate);
 
         Intent detailIntent = getIntent();
-        earthQuake = detailIntent.getParcelableExtra(EarthQuakeFragment.DETAIL_ITEM);
+        earthQuake = detailIntent.getParcelableExtra(EarthQuakeListFragment.DETAIL_ITEM);
         populateView();
     }
     private void populateView(){

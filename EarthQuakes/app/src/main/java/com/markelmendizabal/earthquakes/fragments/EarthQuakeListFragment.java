@@ -5,19 +5,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.markelmendizabal.earthquakes.DetailsActivity;
 import com.markelmendizabal.earthquakes.R;
 import com.markelmendizabal.earthquakes.adapter.EarthQuakeAdapter;
+import com.markelmendizabal.earthquakes.database.EarthQuakeDB;
 import com.markelmendizabal.earthquakes.model.EarthQuake;
-import com.markelmendizabal.earthquakes.tasks.DownloadEarthquakeTasks;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -25,18 +25,29 @@ import java.util.ArrayList;
 /**
  * A fragment representing a list of EarthQuake.
  */
-public class EarthQuakeFragment extends ListFragment {
+public class EarthQuakeListFragment extends ListFragment {
     private ArrayList<EarthQuake> arr;
     private ArrayAdapter<EarthQuake> aa;
     public static final String DETAIL_ITEM = "DETAIL_ITEM";
     private final String EARTHQUAKE = "earthquake";
-    private SharedPreferences prefs;
+    private SharedPreferences prefs=null;
+    private JSONObject json;
+    private EarthQuakeDB earthQuakeDB;
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = super.onCreateView(inflater, container, savedInstanceState);
         aa = new EarthQuakeAdapter(getActivity(), R.layout.earthquake, arr);
+        if(savedInstanceState!= null) {
+
+            ArrayList<EarthQuake> tmp = savedInstanceState.getParcelableArrayList(DETAIL_ITEM);
+            if (tmp != null) {
+
+               arr.addAll(tmp);
+            }
+        }
 
         setListAdapter(aa);
         return layout;
@@ -45,8 +56,12 @@ public class EarthQuakeFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        arr = new ArrayList<EarthQuake>();
         //cargar preferencias
         prefs= PreferenceManager.getDefaultSharedPreferences(this.getActivity().getBaseContext());
+        earthQuakeDB=new EarthQuakeDB(getActivity());
+        int minMag=Integer.getInteger(prefs.getString().)
 
         if (savedInstanceState != null) {
             ArrayList<EarthQuake> tmp = savedInstanceState.getParcelableArrayList(EARTHQUAKE);

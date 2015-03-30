@@ -1,11 +1,11 @@
 package com.markelmendizabal.earthquakes.tasks;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.markelmendizabal.earthquakes.R;
-import com.markelmendizabal.earthquakes.database.EartQuakeDB;
+import com.markelmendizabal.earthquakes.database.EarthQuakeDB;
 import com.markelmendizabal.earthquakes.model.Coordinate;
 import com.markelmendizabal.earthquakes.model.EarthQuake;
 
@@ -20,27 +20,30 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 
 /**
  * Created by cursomovil on 25/03/15.
  */
-public class DownloadEarthquakeTasks extends AsyncTask<String,EarthQuake,Integer> {
-    private EartQuakeDB eartQuakeDB;
+public class DowloadEarthQuakesTask extends AsyncTask<String,EarthQuake,Integer> {
+    private EarthQuakeDB eartQuakeDB;
+
     public interface AddEarthQuakeInterface{
-       // public void addEarthQuake(EarthQuake earthquake);
+      // public void addEarthQuake(EarthQuake earthquake);
         public void notifyTotall(int total);
 
     }
     private final String EARTHQUAKE="EARTHQUAKE";
     private AddEarthQuakeInterface target;
-    public DownloadEarthquakeTasks(Context context,AddEarthQuakeInterface target){
+    public DowloadEarthQuakesTask(Context context, AddEarthQuakeInterface target){
         this.target=target;
-        eartQuakeDB=new EartQuakeDB(context);
+        eartQuakeDB=new EarthQuakeDB(context);
 
     }
+
+
+
     //private ArrayList<EarthQuake> arr;
-    public DownloadEarthquakeTasks(AddEarthQuakeInterface target){
+    public DowloadEarthQuakesTask(AddEarthQuakeInterface target){
         this.target=target;
     }
     @Override
@@ -55,12 +58,13 @@ public class DownloadEarthquakeTasks extends AsyncTask<String,EarthQuake,Integer
         return count;
     }
 
-    /*@Override
+    @Override
     protected void onProgressUpdate(EarthQuake... earthQuakes) {
         super.onProgressUpdate(earthQuakes);
-        target.addEarthQuake(earthQuakes[0]);
+        //target.addEarthQuake(earthQuakes[0]);
+
     }
-    */
+
 
     @Override
     protected void onPostExecute(Integer total) {
@@ -97,6 +101,7 @@ public class DownloadEarthquakeTasks extends AsyncTask<String,EarthQuake,Integer
                 }
             }
 
+
         }catch	(MalformedURLException e)	{
             e.printStackTrace();
         }
@@ -131,6 +136,7 @@ public class DownloadEarthquakeTasks extends AsyncTask<String,EarthQuake,Integer
             //para que pueda sincronizar con el thread principal, android lo hace internamente onProgresUpdate
             publishProgress(earthQuake);
             Log.d("EARTHQUAKE", earthQuake.toString());
+            this.eartQuakeDB.insert(earthQuake);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -8,6 +8,6 @@
     <fragment
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:name="com.markelmendizabal.earthquakes.fragments.EarthQuakeFragment"
+        android:name="com.markelmendizabal.earthquakes.fragments.EarthQuakeListFragment"
         android:id="@+id/fragment" />
 </RelativeLayout>
