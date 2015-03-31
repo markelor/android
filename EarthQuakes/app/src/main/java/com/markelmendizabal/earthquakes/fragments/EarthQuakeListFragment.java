@@ -53,15 +53,15 @@ public class EarthQuakeListFragment extends ListFragment {
         return layout;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         arr = new ArrayList<EarthQuake>();
         //cargar preferencias
-        prefs= PreferenceManager.getDefaultSharedPreferences(this.getActivity().getBaseContext());
+        prefs= PreferenceManager.getDefaultSharedPreferences(getActivity());
         earthQuakeDB=new EarthQuakeDB(getActivity());
-        int minMag=Integer.valueOf(prefs.getString().)
 
         if (savedInstanceState != null) {
             ArrayList<EarthQuake> tmp = savedInstanceState.getParcelableArrayList(EARTHQUAKE);
@@ -87,6 +87,8 @@ public class EarthQuakeListFragment extends ListFragment {
     @Override
     public void onResume() {
         super.onResume();
+        int minMag = Integer.parseInt(prefs.getString(getString(R.string.magnitude), "0"));
+        arr.addAll(earthQuakeDB.getAllByMagnitude(minMag));
     }
 
     @Override
