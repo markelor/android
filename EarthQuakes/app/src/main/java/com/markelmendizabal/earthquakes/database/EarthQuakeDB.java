@@ -3,20 +3,12 @@ package com.markelmendizabal.earthquakes.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
+
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-<<<<<<< HEAD
-=======
-import android.util.Log;
->>>>>>> 0df9bcffaa5c917421bbddc2c5a1307f92807061
 
 import com.markelmendizabal.earthquakes.model.EarthQuake;
-
-import org.w3c.dom.Comment;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,15 +29,9 @@ public class EarthQuakeDB {
     public static final String KEY_URL="url";
     public static final String KEY_LAT="lat";
     public static final String KEY_LNG="lng";
-<<<<<<< HEAD
-    public static final String KEY_DEPHT="depth";
-    public static final String KEY_TIME="time";
-    public static  final String[] allColumns = { KEY_ID,KEY_MAGNITUDE,KEY_PLACE,KEY_URL,KEY_LAT,KEY_LNG,KEY_DEPHT,KEY_TIME};
-=======
     public static final String KEY_DEPTH="depth";
     public static final String KEY_TIME="time";
     public static  final String[] allColumns = { KEY_ID,KEY_MAGNITUDE,KEY_PLACE,KEY_URL,KEY_LAT,KEY_LNG,KEY_DEPTH,KEY_TIME};
->>>>>>> 0df9bcffaa5c917421bbddc2c5a1307f92807061
 
 
 
@@ -54,18 +40,12 @@ public class EarthQuakeDB {
 
         this.helper = new EarthQuakeOpenHelper(context, EarthQuakeOpenHelper.DATABASE_NAME, null, EarthQuakeOpenHelper.DATABASE_VERSION);
         this.db = helper.getWritableDatabase();
-<<<<<<< HEAD
-        //getCursor();
-    }
-
-
-
-=======
     }
 
     public List<EarthQuake> getAll() {
         return query(null,null);
     }
+
     public List<EarthQuake> getAllByMagnitude(int magnitude) {
         String where=KEY_MAGNITUDE + ">=?";
         String [] whereArgs={
@@ -74,59 +54,44 @@ public class EarthQuakeDB {
 
         return query(where,whereArgs);
     }
->>>>>>> 0df9bcffaa5c917421bbddc2c5a1307f92807061
 
-       private List<EarthQuake> query(String where,String[] whereArgs) {
+    private List<EarthQuake> query(String where,String[] whereArgs) {
 
-            List<EarthQuake> earthQuakes = new ArrayList<EarthQuake>();
+        List<EarthQuake> earthQuakes = new ArrayList<EarthQuake>();
 
-<<<<<<< HEAD
-            Cursor cursor = db.query(EarthQuakeOpenHelper.DATABASE_TABLE,
-                    allColumns, where, whereArgs, null, null, KEY_TIME+"DESC");
 
-            cursor.moveToFirst();
-=======
+        Cursor cursor = db.query(
+                EarthQuakeOpenHelper.DATABASE_TABLE,
+                allColumns,
+                where,
+                whereArgs,
+                null,
+                null,
+                KEY_TIME + " DESC"
+        );
 
-           Cursor cursor = db.query(
-                   EarthQuakeOpenHelper.DATABASE_TABLE,
-                   allColumns,
-                   where,
-                   whereArgs,
-                   null,
-                   null,
-                   null
-                   //KEY_TIME + " DESC"
-           );
+        HashMap<String ,Integer> indexes=new HashMap<>();
+        for (int i=0;i<allColumns.length;i++){
+            indexes.put(allColumns[i],cursor.getColumnIndex(allColumns[i]));
 
->>>>>>> 0df9bcffaa5c917421bbddc2c5a1307f92807061
-            HashMap<String ,Integer> indexes=new HashMap<>();
-            for (int i=0;i<allColumns.length;i++){
-                indexes.put(allColumns[i],cursor.getColumnIndex(allColumns[i]));
-
-            }
-            while (cursor.moveToNext()) {
-               EarthQuake earthQuake=new EarthQuake();
-                earthQuake.set_id(cursor.getString(indexes.get(KEY_ID)));
-<<<<<<< HEAD
-                earthQuake.setPlace(cursor.getString(indexes.get(KEY_PLACE)));
-                earthQuake.setMagnitude(cursor.getString(indexes.get(KEY_MAGNITUDE)));
-                earthQuake.setCoords(cursor.getString(indexes.get(KEY_ID)));
-
-=======
-                earthQuake.setMagnitude(cursor.getDouble(indexes.get(KEY_MAGNITUDE)));
-                earthQuake.setPlace(cursor.getString(indexes.get(KEY_PLACE)));
-                earthQuake.setUrl(cursor.getString(indexes.get(KEY_URL)));
-                earthQuake.getCoords().setLat(cursor.getDouble(indexes.get(KEY_LAT)));
-                earthQuake.getCoords().setLng(cursor.getDouble(indexes.get(KEY_LNG)));
-                earthQuake.getCoords().setDepth(cursor.getDouble(indexes.get(KEY_DEPTH)));
-                earthQuake.setTime(cursor.getLong(indexes.get(KEY_TIME)));
->>>>>>> 0df9bcffaa5c917421bbddc2c5a1307f92807061
-                earthQuakes.add(earthQuake);
-            }
-            // make sure to close the cursor
-            cursor.close();
-            return earthQuakes;
         }
+
+        while (cursor.moveToNext()) {
+            EarthQuake earthQuake=new EarthQuake();
+            earthQuake.set_id(cursor.getString(indexes.get(KEY_ID)));
+            earthQuake.setMagnitude(cursor.getDouble(indexes.get(KEY_MAGNITUDE)));
+            earthQuake.setPlace(cursor.getString(indexes.get(KEY_PLACE)));
+            earthQuake.setUrl(cursor.getString(indexes.get(KEY_URL)));
+            earthQuake.getCoords().setLat(cursor.getDouble(indexes.get(KEY_LAT)));
+            earthQuake.getCoords().setLng(cursor.getDouble(indexes.get(KEY_LNG)));
+            earthQuake.getCoords().setDepth(cursor.getDouble(indexes.get(KEY_DEPTH)));
+            earthQuake.setTime(cursor.getLong(indexes.get(KEY_TIME)));
+            earthQuakes.add(earthQuake);
+        }
+        // make sure to close the cursor
+        cursor.close();
+        return earthQuakes;
+    }
 
 
 
@@ -140,11 +105,7 @@ public class EarthQuakeDB {
         values.put(KEY_URL, earthQuake.getUrl());
         values.put(KEY_LAT, earthQuake.getCoords().getLat());
         values.put(KEY_LNG, earthQuake.getCoords().getLng());
-<<<<<<< HEAD
-        values.put(KEY_DEPHT, earthQuake.getCoords().getDepth());
-=======
         values.put(KEY_DEPTH, earthQuake.getCoords().getDepth());
->>>>>>> 0df9bcffaa5c917421bbddc2c5a1307f92807061
         values.put(KEY_TIME, earthQuake.getTime().getTime());
         //	Insert	the	row	into	your	tabled
         try{
@@ -164,11 +125,6 @@ public class EarthQuakeDB {
         private static final int DATABASE_VERSION = 1;
 
 
-<<<<<<< HEAD
-        //private  static  final String DATABASE_CREATE= "CREATE TABLE" + DATABASE_TABLE + "_id PRIMARY KEY, place TEXT, magnitude REAL, lat REAL,long REAL, depth REAL, url TEXT, time INTEGER";
-        private static final String DATABASE_CREATE = "CREATE Table " + DATABASE_TABLE +
-                "(_id  TEXT PRIMARY KEY, place TEXT, magnitude REAL, lat REAL , lng REAL, url TEXT,depth REAL, time INTEGER)";
-=======
 
         private static final String DATABASE_CREATE = "CREATE Table " + DATABASE_TABLE +
                 " (" +
@@ -180,7 +136,6 @@ public class EarthQuakeDB {
                 KEY_DEPTH + " REAL," +
                 KEY_URL + " TEXT," +
                 KEY_TIME + " INTEGER)";
->>>>>>> 0df9bcffaa5c917421bbddc2c5a1307f92807061
 
 
         public EarthQuakeOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {

@@ -17,6 +17,8 @@ public class EarthQuake implements Parcelable {
     private  String url;
 
     public EarthQuake(String _id, String place, Date date, Coordinate coords, double magnitude) {
+        this();
+
         this._id = _id;
         this.place = place;
         this.time = date;
@@ -26,7 +28,7 @@ public class EarthQuake implements Parcelable {
     }
 
     public EarthQuake() {
-
+        this.coords = new Coordinate(0.0, 0.0, 0.0);
     }
 
 
