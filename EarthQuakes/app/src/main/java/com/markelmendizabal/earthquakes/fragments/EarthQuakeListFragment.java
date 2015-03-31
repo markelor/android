@@ -61,7 +61,7 @@ public class EarthQuakeListFragment extends ListFragment {
         //cargar preferencias
         prefs= PreferenceManager.getDefaultSharedPreferences(this.getActivity().getBaseContext());
         earthQuakeDB=new EarthQuakeDB(getActivity());
-        int minMag=Integer.getInteger(prefs.getString().)
+        int minMag=Integer.valueOf(prefs.getString().)
 
         if (savedInstanceState != null) {
             ArrayList<EarthQuake> tmp = savedInstanceState.getParcelableArrayList(EARTHQUAKE);
