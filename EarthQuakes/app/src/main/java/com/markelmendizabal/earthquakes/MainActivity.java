@@ -1,19 +1,32 @@
 package com.markelmendizabal.earthquakes;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.markelmendizabal.earthquakes.database.EarthQuakeDB;
+import com.markelmendizabal.earthquakes.model.EarthQuake;
+import com.markelmendizabal.earthquakes.tasks.DowloadEarthQuakesTask;
 
 
-public class MainActivity extends ActionBarActivity {
-    private final int PREFS_ACTYVITY=1;
+public class MainActivity extends ActionBarActivity implements DowloadEarthQuakesTask.AddEarthQuakeInterface {
+
+    private static final int PREFS_ACTIVITY = 1 ;
+    private EarthQuakeDB eartQuakeDB;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        DowloadEarthQuakesTask task = new DowloadEarthQuakesTask(this,this);
+
+        task.execute(getString(R.string.earthquakeurl));
     }
 
 
@@ -33,17 +46,43 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent prefsIntent=new Intent(this,SettingsActivity.class);
-            startActivityForResult(prefsIntent,PREFS_ACTYVITY);
+            Intent prefIntent;
+            prefIntent = new Intent(this, SettingsActivity.class);
+            startActivityForResult(prefIntent, PREFS_ACTIVITY);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+/*
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void addEarthQuake(EarthQuake earthquake) {
+        ContentValues newValues	=	new	ContentValues();
+        if(eartQuakeDB!=null){
+            ContentValues values = new ContentValues();
+            values.put("id", earthQuake.get_id());
+            values.put("magnitude", earthQuake.getMagnitude());
+            values.put("place", earthQuake.getPlace());
+            values.put("url", earthQuake.getUrl());
+            values.put("coords", earthQuake.getCoords().toString());
+            values.put("time", earthQuake.getTime().toString());
+            //	Insert	the	row	into	your	table
+            eartQuakeDB.insert()
+            eartQuakeDB.insert(HoardDBOpenHelper.DATABASE_TABLE,	null,	newValues);
+        }
+        db.close();
+
+
+
+    }
+*/
+
+    @Override
+    public void notifyTotall(int total) {
+        String msg= getString(R.string.magnitude,total);
+        Toast toast=  Toast.makeText( this,msg + total, Toast.LENGTH_LONG);
+        toast.show();
 
     }
 }

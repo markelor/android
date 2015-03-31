@@ -18,5 +18,8 @@
     <string name="auto_update_interval_prompt">AUTO_UPDATE_INTERVAL_PROMT</string>
     <string name="min_magnitude">MIN_MAGNITUDE</string>
     <string name="magnitude">MAGNITUDE</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
 
