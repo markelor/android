@@ -1,8 +1,8 @@
 package com.markelmendizabal.earthquakes;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -13,21 +13,26 @@ import com.markelmendizabal.earthquakes.model.EarthQuake;
 
 public class DetailsActivity extends ActionBarActivity {
     private EarthQuake earthQuake;
+    private TextView _id;
     private TextView lblPlace;
     private TextView lblDate;
+    private TextView time;
+    private TextView magnitude;
+    private TextView url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        lblPlace= (TextView) findViewById(R.id.place);
-       // lblDate= (TextView) findViewById(R.id.lblDate);
+        lblPlace = (TextView) findViewById(R.id.place);
+        // lblDate= (TextView) findViewById(R.id.lblDate);
 
         Intent detailIntent = getIntent();
         earthQuake = detailIntent.getParcelableExtra(EarthQuakeListFragment.DETAIL_ITEM);
         populateView();
     }
-    private void populateView(){
+
+    private void populateView() {
         lblPlace.setText(earthQuake.getPlace());
         //lblDate.setText(earthquake.getCreatedFormated());
 

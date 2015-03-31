@@ -17,33 +17,34 @@ import java.util.List;
 /**
  * Created by cursomovil on 25/03/15.
  */
-public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake>{
+public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake> {
     private int resource;
+
     public EarthQuakeAdapter(Context context, int resource, List<EarthQuake> objects) {
         super(context, resource, objects);
-        this.resource=resource;
+        this.resource = resource;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LinearLayout layout;
-        if(convertView==null){
-            layout=new LinearLayout(getContext());
+        if (convertView == null) {
+            layout = new LinearLayout(getContext());
             LayoutInflater li;
-            String inflater=Context.LAYOUT_INFLATER_SERVICE;
-            li=(LayoutInflater)getContext().getSystemService(inflater);
-            li.inflate(resource,layout,true);
+            String inflater = Context.LAYOUT_INFLATER_SERVICE;
+            li = (LayoutInflater) getContext().getSystemService(inflater);
+            li.inflate(resource, layout, true);
 
-        }else{
-            layout=(LinearLayout)convertView;
+        } else {
+            layout = (LinearLayout) convertView;
         }
-        EarthQuake item=getItem(position);
+        EarthQuake item = getItem(position);
 
-        TextView lblMagnitude=(TextView)layout.findViewById(R.id.txtMagnitud);
-        TextView lblLugar=(TextView)layout.findViewById(R.id.txtLugar);
-        TextView lblDate=(TextView)layout.findViewById(R.id.txtDate);
+        TextView lblMagnitude = (TextView) layout.findViewById(R.id.txtMagnitud);
+        TextView lblLugar = (TextView) layout.findViewById(R.id.txtLugar);
+        TextView lblDate = (TextView) layout.findViewById(R.id.txtDate);
 
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
         lblMagnitude.setText(Double.toString(item.getMagnitude()));
         lblLugar.setText(item.getPlace());

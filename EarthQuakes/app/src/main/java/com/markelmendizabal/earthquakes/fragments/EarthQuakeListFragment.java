@@ -30,7 +30,7 @@ public class EarthQuakeListFragment extends ListFragment {
     private ArrayAdapter<EarthQuake> aa;
     public static final String DETAIL_ITEM = "DETAIL_ITEM";
     private final String EARTHQUAKE = "earthquake";
-    private SharedPreferences prefs=null;
+    private SharedPreferences prefs = null;
     private JSONObject json;
     private EarthQuakeDB earthQuakeDB;
 
@@ -41,8 +41,8 @@ public class EarthQuakeListFragment extends ListFragment {
         arr = new ArrayList<EarthQuake>();
         //cargar preferencias
 
-        prefs= PreferenceManager.getDefaultSharedPreferences(getActivity());
-        earthQuakeDB=new EarthQuakeDB(getActivity());
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        earthQuakeDB = new EarthQuakeDB(getActivity());
 
         if (savedInstanceState != null) {
             ArrayList<EarthQuake> tmp = savedInstanceState.getParcelableArrayList(EARTHQUAKE);
@@ -51,7 +51,6 @@ public class EarthQuakeListFragment extends ListFragment {
             }
 
         }
-
 
 
         //para que la ejecucion del programa y my Jsoon vayan aparte lanzamos un thread
@@ -70,20 +69,18 @@ public class EarthQuakeListFragment extends ListFragment {
         View layout = super.onCreateView(inflater, container, savedInstanceState);
 
         aa = new EarthQuakeAdapter(getActivity(), R.layout.earthquake, arr);
-        if(savedInstanceState!= null) {
+        if (savedInstanceState != null) {
 
             ArrayList<EarthQuake> tmp = savedInstanceState.getParcelableArrayList(DETAIL_ITEM);
             if (tmp != null) {
 
-               arr.addAll(tmp);
+                arr.addAll(tmp);
             }
         }
 
         setListAdapter(aa);
         return layout;
     }
-
-
 
 
     @Override
@@ -106,7 +103,6 @@ public class EarthQuakeListFragment extends ListFragment {
         startActivity(detailIntent);
 
     }
-
 
 
 }

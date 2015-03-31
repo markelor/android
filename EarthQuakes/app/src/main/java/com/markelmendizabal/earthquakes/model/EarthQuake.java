@@ -14,16 +14,16 @@ public class EarthQuake implements Parcelable {
     private Date time;
     private Coordinate coords;
     private double magnitude;
-    private  String url;
+    private String url;
 
-    public EarthQuake(String _id, String place, Date date, Coordinate coords, double magnitude) {
-        this();
+    public EarthQuake(String _id, String place, Date date, Coordinate coords, double magnitude, String url) {
 
         this._id = _id;
         this.place = place;
         this.time = date;
         this.coords = coords;
         this.magnitude = magnitude;
+        this.url = url;
 
     }
 
@@ -32,7 +32,7 @@ public class EarthQuake implements Parcelable {
     }
 
 
-    public String toString(){
+    public String toString() {
         return this.getPlace();
     }
 
@@ -95,9 +95,14 @@ public class EarthQuake implements Parcelable {
         dest.writeString(_id);
         dest.writeString(place);
         dest.writeLong(time.getTime());
+        //lat,lng,depth
+        //dest.writeDouble(coords.getLat());
+        // dest.writeDouble(coords.getLng());
+        //dest.writeDouble(coords.getDepth());
         dest.writeDouble(magnitude);
         dest.writeString(url);
     }
+
     public static final Parcelable.Creator<EarthQuake> CREATOR
             = new Parcelable.Creator<EarthQuake>() {
 
@@ -111,11 +116,14 @@ public class EarthQuake implements Parcelable {
     };
 
     private EarthQuake(Parcel in) {
-        _id=in.readString();
-        place=in.readString();
-        time=new Date(in.readLong());
-        magnitude=in.readDouble();
-        url=in.readString();
+        _id = in.readString();
+        place = in.readString();
+        time = new Date(in.readLong());
+        //this.coords.setLat(in.readDouble());
+        // this.coords.setLng(in.readDouble());
+        //this.coords.setDepth(in.readDouble());
+        magnitude = in.readDouble();
+        url = in.readString();
 
     }
 }

@@ -3,12 +3,12 @@ package com.markelmendizabal.earthquakes.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.markelmendizabal.earthquakes.model.EarthQuake;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,17 +23,15 @@ public class EarthQuakeDB {
     //http://www.vogella.com/tutorials/AndroidSQLite/article.html
 
     //colum names
-    public static final String KEY_ID="_id";
-    public static final String KEY_MAGNITUDE="magnitude";
-    public static final String KEY_PLACE="place";
-    public static final String KEY_URL="url";
-    public static final String KEY_LAT="lat";
-    public static final String KEY_LNG="lng";
-    public static final String KEY_DEPTH="depth";
-    public static final String KEY_TIME="time";
-    public static  final String[] allColumns = { KEY_ID,KEY_MAGNITUDE,KEY_PLACE,KEY_URL,KEY_LAT,KEY_LNG,KEY_DEPTH,KEY_TIME};
-
-
+    public static final String KEY_ID = "_id";
+    public static final String KEY_MAGNITUDE = "magnitude";
+    public static final String KEY_PLACE = "place";
+    public static final String KEY_URL = "url";
+    public static final String KEY_LAT = "lat";
+    public static final String KEY_LNG = "lng";
+    public static final String KEY_DEPTH = "depth";
+    public static final String KEY_TIME = "time";
+    public static final String[] allColumns = {KEY_ID, KEY_MAGNITUDE, KEY_PLACE, KEY_URL, KEY_LAT, KEY_LNG, KEY_DEPTH, KEY_TIME};
 
 
     public EarthQuakeDB(Context context) {
@@ -43,19 +41,19 @@ public class EarthQuakeDB {
     }
 
     public List<EarthQuake> getAll() {
-        return query(null,null);
+        return query(null, null);
     }
 
     public List<EarthQuake> getAllByMagnitude(int magnitude) {
-        String where=KEY_MAGNITUDE + ">=?";
-        String [] whereArgs={
+        String where = KEY_MAGNITUDE + ">=?";
+        String[] whereArgs = {
                 String.valueOf(magnitude)
         };
 
-        return query(where,whereArgs);
+        return query(where, whereArgs);
     }
 
-    private List<EarthQuake> query(String where,String[] whereArgs) {
+    private List<EarthQuake> query(String where, String[] whereArgs) {
 
         List<EarthQuake> earthQuakes = new ArrayList<EarthQuake>();
 
@@ -70,14 +68,14 @@ public class EarthQuakeDB {
                 KEY_TIME + " DESC"
         );
 
-        HashMap<String ,Integer> indexes=new HashMap<>();
-        for (int i=0;i<allColumns.length;i++){
-            indexes.put(allColumns[i],cursor.getColumnIndex(allColumns[i]));
+        HashMap<String, Integer> indexes = new HashMap<>();
+        for (int i = 0; i < allColumns.length; i++) {
+            indexes.put(allColumns[i], cursor.getColumnIndex(allColumns[i]));
 
         }
 
         while (cursor.moveToNext()) {
-            EarthQuake earthQuake=new EarthQuake();
+            EarthQuake earthQuake = new EarthQuake();
             earthQuake.set_id(cursor.getString(indexes.get(KEY_ID)));
             earthQuake.setMagnitude(cursor.getDouble(indexes.get(KEY_MAGNITUDE)));
             earthQuake.setPlace(cursor.getString(indexes.get(KEY_PLACE)));
@@ -94,9 +92,6 @@ public class EarthQuakeDB {
     }
 
 
-
-
-
     public void insert(EarthQuake earthQuake) {
         ContentValues values = new ContentValues();
         values.put(KEY_ID, earthQuake.get_id());
@@ -108,10 +103,10 @@ public class EarthQuakeDB {
         values.put(KEY_DEPTH, earthQuake.getCoords().getDepth());
         values.put(KEY_TIME, earthQuake.getTime().getTime());
         //	Insert	the	row	into	your	tabled
-        try{
+        try {
             db.insertOrThrow(EarthQuakeOpenHelper.DATABASE_TABLE, null, values);
 
-        }catch (SQLiteException ex){
+        } catch (SQLiteException ex) {
 
         }
 
@@ -123,7 +118,6 @@ public class EarthQuakeDB {
         private static final String DATABASE_NAME = "earthQuakes.db";
         private static final String DATABASE_TABLE = "EARTHQUAKES";
         private static final int DATABASE_VERSION = 1;
-
 
 
         private static final String DATABASE_CREATE = "CREATE Table " + DATABASE_TABLE +
