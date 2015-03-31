@@ -53,15 +53,21 @@ public class EarthQuakeListFragment extends ListFragment {
         return layout;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         arr = new ArrayList<EarthQuake>();
         //cargar preferencias
+<<<<<<< HEAD:EarthQuakes/app/src/main/java/com/markelmendizabal/earthquakes/fragments/EarthQuakeListFragment.java
         prefs= PreferenceManager.getDefaultSharedPreferences(this.getActivity().getBaseContext());
         earthQuakeDB=new EarthQuakeDB(getActivity());
         int minMag=Integer.valueOf(prefs.getString().)
+=======
+        prefs= PreferenceManager.getDefaultSharedPreferences(getActivity());
+        earthQuakeDB=new EarthQuakeDB(getActivity());
+>>>>>>> 0df9bcffaa5c917421bbddc2c5a1307f92807061:EarthQuakes/app/src/main/java/com/markelmendizabal/earthquakes/fragments/EarthQuakeListFragment.java
 
         if (savedInstanceState != null) {
             ArrayList<EarthQuake> tmp = savedInstanceState.getParcelableArrayList(EARTHQUAKE);
@@ -87,6 +93,11 @@ public class EarthQuakeListFragment extends ListFragment {
     @Override
     public void onResume() {
         super.onResume();
+<<<<<<< HEAD:EarthQuakes/app/src/main/java/com/markelmendizabal/earthquakes/fragments/EarthQuakeListFragment.java
+=======
+        int minMag = Integer.parseInt(prefs.getString(getString(R.string.magnitude), "0"));
+        arr.addAll(earthQuakeDB.getAllByMagnitude(minMag));
+>>>>>>> 0df9bcffaa5c917421bbddc2c5a1307f92807061:EarthQuakes/app/src/main/java/com/markelmendizabal/earthquakes/fragments/EarthQuakeListFragment.java
     }
 
     @Override
