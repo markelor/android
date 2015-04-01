@@ -1,6 +1,8 @@
 package com.markelmendizabal.earthquakes;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -8,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.markelmendizabal.earthquakes.database.EarthQuakeDB;
+import com.markelmendizabal.earthquakes.managers.EarthQuakeAlarmManager;
 import com.markelmendizabal.earthquakes.services.DownloadEarthQuakesService;
 import com.markelmendizabal.earthquakes.tasks.DowloadEarthQuakesTask;
 
@@ -16,6 +19,7 @@ public class MainActivity extends ActionBarActivity implements DowloadEarthQuake
 
     private static final int PREFS_ACTIVITY = 1;
     private EarthQuakeDB eartQuakeDB;
+    private final String EARTHQUAKE_PREFS="EARTHQUAKE_PREFS";
 
 
     @Override
@@ -26,6 +30,7 @@ public class MainActivity extends ActionBarActivity implements DowloadEarthQuake
         DowloadEarthQuakesTask task = new DowloadEarthQuakesTask(this, this);
 
         task.execute(getString(R.string.earthquakeurl));
+        checkToSetAlarm();
     }
 
 
@@ -76,9 +81,16 @@ public class MainActivity extends ActionBarActivity implements DowloadEarthQuake
 
         }
     */
-    public void downdloadEarthQuakes() {
-        Intent downdload = new Intent(this, DownloadEarthQuakesService.class);
-        startService(downdload);
+    public void checkToSetAlarm() {
+        //Intent downdload = new Intent(this, DownloadEarthQuakesService.class);
+        //startService(downdload);
+        SharedPreferences prefs=getSharedPreferences(EARTHQUAKE_PREFS, Activity.MODE_PRIVATE);
+        if(!prefs.getBoolean("LAUNCHED_BEFORE",false)){
+            long interval=getResources().getInteger(R.integer.default_integer)*60*1000;
+            EarthQuakeAlarmManager.setAlarm(this,interval);
+            prefs.edit().putBoolean("LAUNCHED_BEFORE",true).apply();
+        }
+
     }
 
     @Override

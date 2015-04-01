@@ -18,7 +18,7 @@
             android:entries="@array/listfrecuency_options"
             android:entryValues="@array/listfrecuency_values"
             android:dependency="@string/pref_auto_update"
-            android:defaultValue="5" />
+            android:defaultValue="@integer/default_integer" />
 
 
     </PreferenceCategory>
