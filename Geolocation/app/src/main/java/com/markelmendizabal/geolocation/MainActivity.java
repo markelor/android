@@ -2,7 +2,7 @@ package com.markelmendizabal.geolocation;
 
 import android.content.Context;
 import android.location.Criteria;
-import android.location.LocationListener;
+import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
@@ -10,8 +10,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.markelmendizabal.geolocation.listeners.LocationListener;
 
-public class MainActivity extends ActionBarActivity implements LocationListener.{
+
+public class MainActivity extends ActionBarActivity implements LocationListener.AddLocationInterface {
     private TextView lblLatitude;
     private TextView lblLongitude;
     private TextView lblAltitude;
@@ -23,7 +25,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String	serviceString	=	Context.LOCATION_SERVICE;
+        String	serviceString=	Context.LOCATION_SERVICE;
         locationManager	=	(LocationManager)getSystemService(serviceString);
         lblLatitude = (TextView) findViewById(R.id.lblLatidude);
         lblLongitude = (TextView) findViewById(R.id.lblLongitude);
@@ -50,9 +52,16 @@ public class MainActivity extends ActionBarActivity implements LocationListener.
     private void listenLocationChanges() {
         int t=5000;
         int distance=5;
-        LocationListener listener=new LocationListener(this) {
-        }
+        LocationListener listener=new LocationListener(this);
         locationManager.requestLocationUpdates(provider,t,distance,listener);
     }
 
+
+    @Override
+    public void addLocation(Location location) {
+        lblLatitude.setText(String.valueOf(location.getLatitude()));
+        lblLongitude.setText(String.valueOf(location.getLongitude()));
+        lblAltitude.setText(String.valueOf(location.getAltitude()));
+        lblSpeed.setText(String.valueOf(location.getSpeed()));
+    }
 }

@@ -8,17 +8,18 @@ import android.os.Bundle;
  */
 public class LocationListener implements android.location.LocationListener {
 
-    public interface  SetLocationInterface{
+    public interface AddLocationInterface {
         public void addLocation(Location location);
     }
+
     private AddLocationInterface target;
 
     public LocationListener(AddLocationInterface target) {
         this.target = target;
     }
-
     @Override
     public void onLocationChanged(Location location) {
+        target.addLocation(location);
 
     }
 
