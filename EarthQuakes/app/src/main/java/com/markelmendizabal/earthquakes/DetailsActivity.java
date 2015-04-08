@@ -68,11 +68,11 @@ public class DetailsActivity extends FragmentActivity {
 
     private void setUpMap() {
        double lat=earthQuake.getCoords().getLat();
-        double lng=earthQuake.getCoords().getLng();
+       double lng=earthQuake.getCoords().getLng();
         Log.d("aaa", earthQuake.getPlace());
         Log.d("aaa", String.valueOf(lat));
         Log.d("aaa", String.valueOf(lng));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(lat,lng)).title("Marker"));
     }
 }
 

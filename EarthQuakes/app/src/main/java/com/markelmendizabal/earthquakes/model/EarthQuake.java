@@ -121,9 +121,7 @@ public class EarthQuake implements Parcelable {
         _id = in.readString();
         place = in.readString();
         time = new Date(in.readLong());
-        coords.setLat(in.readDouble());
-        coords.setLng(in.readDouble());
-        coords.setDepth(in.readDouble());
+        this.coords=new Coordinate(in.readDouble(), in.readDouble(), in.readDouble());
         magnitude = in.readDouble();
         url = in.readString();
 
