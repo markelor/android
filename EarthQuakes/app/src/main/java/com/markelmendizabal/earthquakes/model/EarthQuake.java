@@ -2,6 +2,7 @@ package com.markelmendizabal.earthquakes.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.Date;
 
@@ -96,9 +97,10 @@ public class EarthQuake implements Parcelable {
         dest.writeString(place);
         dest.writeLong(time.getTime());
         //lat,lng,depth
-        //dest.writeDouble(coords.getLat());
-        // dest.writeDouble(coords.getLng());
-        //dest.writeDouble(coords.getDepth());
+        dest.writeDouble(coords.getLat());
+        Log.d("oo",String.valueOf(coords.getLat()));
+        dest.writeDouble(coords.getLng());
+        dest.writeDouble(coords.getDepth());
         dest.writeDouble(magnitude);
         dest.writeString(url);
     }
@@ -119,9 +121,9 @@ public class EarthQuake implements Parcelable {
         _id = in.readString();
         place = in.readString();
         time = new Date(in.readLong());
-        //this.coords.setLat(in.readDouble());
-        // this.coords.setLng(in.readDouble());
-        //this.coords.setDepth(in.readDouble());
+        coords.setLat(in.readDouble());
+        coords.setLng(in.readDouble());
+        coords.setDepth(in.readDouble());
         magnitude = in.readDouble();
         url = in.readString();
 

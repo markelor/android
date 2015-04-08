@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">EarthQuakes</string>
-
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="earthquakeurl">http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson</string>
@@ -18,8 +17,9 @@
     <string name="auto_update_interval_prompt">AUTO_UPDATE_INTERVAL_PROMT</string>
     <string name="min_magnitude">MIN_MAGNITUDE</string>
     <string name="magnitude">MAGNITUDE</string>
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
 </resources>
 

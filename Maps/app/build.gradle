@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.markelmendizabal.earthquakes"
+        applicationId "com.markelmendizabal.maps"
         minSdkVersion 17
         targetSdkVersion 21
         versionCode 1
