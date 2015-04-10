@@ -2,9 +2,9 @@ package com.markelmendizabal.earthquakes.listeners;
 
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
+import android.app.ActionBar;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 
 /**
  * Created by cursomovil on 10/04/15.
@@ -58,3 +58,4 @@ public class TabListener<T extends Fragment> implements ActionBar.TabListener {
             ft.attach(fragment);
 
     }
+}

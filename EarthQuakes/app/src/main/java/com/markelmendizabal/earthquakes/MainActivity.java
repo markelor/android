@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
+import android.app.ActionBar;
 import com.markelmendizabal.earthquakes.database.EarthQuakeDB;
 import com.markelmendizabal.earthquakes.fragments.EarthQuakeListFragment;
 import com.markelmendizabal.earthquakes.fragments.EarthquakeMapFragment;
@@ -18,7 +16,7 @@ import com.markelmendizabal.earthquakes.managers.EarthQuakeAlarmManager;
 import com.markelmendizabal.earthquakes.tasks.DowloadEarthQuakesTask;
 
 
-public class MainActivity extends ActionBarActivity implements DowloadEarthQuakesTask.AddEarthQuakeInterface {
+public class MainActivity extends Activity implements DowloadEarthQuakesTask.AddEarthQuakeInterface {
 
     private static final int PREFS_ACTIVITY = 1;
     private EarthQuakeDB eartQuakeDB;
@@ -33,7 +31,7 @@ public class MainActivity extends ActionBarActivity implements DowloadEarthQuake
         DowloadEarthQuakesTask task = new DowloadEarthQuakesTask(this, this);
         task.execute(getString(R.string.earthquakeurl));
         checkToSetAlarm();
-        ActionBar actionBar=getSupportActionBar();
+        android.app.ActionBar actionBar=getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         ActionBar.Tab tabList = actionBar.newTab();
 
@@ -49,9 +47,7 @@ public class MainActivity extends ActionBarActivity implements DowloadEarthQuake
         tabList.setText(getString(R.string.tab_map_title))
                 .setTabListener(
                         new TabListener<EarthquakeMapFragment>
-                                (this, R.id.fragmentContainer, EarthQuakeListFragment.class));
-
-
+                                (this, R.id.fragmentContainer, EarthquakeMapFragment.class));
         actionBar.addTab(tabList);
     }
 
@@ -81,28 +77,6 @@ public class MainActivity extends ActionBarActivity implements DowloadEarthQuake
         return super.onOptionsItemSelected(item);
     }
 
-    /*
-        @Override
-        public void addEarthQuake(EarthQuake earthquake) {
-            ContentValues newValues	=	new	ContentValues();
-            if(eartQuakeDB!=null){
-                ContentValues values = new ContentValues();
-                values.put("id", earthQuake.get_id());
-                values.put("magnitude", earthQuake.getMagnitude());
-                values.put("place", earthQuake.getPlace());
-                values.put("url", earthQuake.getUrl());
-                values.put("coords", earthQuake.getCoords().toString());
-                values.put("time", earthQuake.getTime().toString());
-                //	Insert	the	row	into	your	table
-                eartQuakeDB.insert()
-                eartQuakeDB.insert(HoardDBOpenHelper.DATABASE_TABLE,	null,	newValues);
-            }
-            db.close();
-
-
-
-        }
-    */
     public void checkToSetAlarm() {
         //Intent downdload = new Intent(this, DownloadEarthQuakesService.class);
         //startService(downdload);
