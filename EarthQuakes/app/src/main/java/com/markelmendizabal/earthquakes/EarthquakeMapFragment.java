@@ -18,6 +18,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.markelmendizabal.earthquakes.R;
 import com.markelmendizabal.earthquakes.fragments.EarthQuakeListFragment;
@@ -48,6 +49,8 @@ public class EarthquakeMapFragment extends MapFragment implements GoogleMap.OnMa
     public void onMapLoaded() {
         mMap = getMap();
         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+
+        LatLngBounds.Builder builder= new LatLngBounds.Builder();
         //bound
 
         for (EarthQuake earthQuake : earthQuakes) {
@@ -56,6 +59,19 @@ public class EarthquakeMapFragment extends MapFragment implements GoogleMap.OnMa
 
             mMap.addMarker(new MarkerOptions().position(new LatLng(lng, lat)).title(earthQuake.getPlace()).snippet(earthQuake.getUrl()));
             LatLng position = new LatLng(lng, lat);
+
+
+            LatLng eartqueakeposition = new LatLng(earthQuake.getCoords().getLng(),
+                    earthQuake.getCoords().getLat());
+
+            String Place = earthQuake.getPlace();
+            String Url = earthQuake.getUrl();
+            double Magnitude = earthQuake.getMagnitude();
+
+            MarkerOptions marker = new MarkerOptions().position(eartqueakeposition).title(Place).snippet(String.valueOf(Magnitude));
+            mMap.addMarker(marker);
+            builder.include(marker.getPosition());
+            LatLngBounds bounds = builder.build();
 
             /*CameraPosition camPos = new CameraPosition.Builder().target(position)
                     .zoom(0)
