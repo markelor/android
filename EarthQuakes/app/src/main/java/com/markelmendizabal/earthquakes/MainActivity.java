@@ -4,14 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.markelmendizabal.earthquakes.database.EarthQuakeDB;
+import com.markelmendizabal.earthquakes.fragments.EarthQuakeListFragment;
+import com.markelmendizabal.earthquakes.fragments.EarthquakeMapFragment;
+import com.markelmendizabal.earthquakes.listeners.TabListener;
 import com.markelmendizabal.earthquakes.managers.EarthQuakeAlarmManager;
-import com.markelmendizabal.earthquakes.services.DownloadEarthQuakesService;
 import com.markelmendizabal.earthquakes.tasks.DowloadEarthQuakesTask;
 
 
@@ -28,9 +31,28 @@ public class MainActivity extends ActionBarActivity implements DowloadEarthQuake
         setContentView(R.layout.activity_main);
 
         DowloadEarthQuakesTask task = new DowloadEarthQuakesTask(this, this);
-
         task.execute(getString(R.string.earthquakeurl));
         checkToSetAlarm();
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        ActionBar.Tab tabList = actionBar.newTab();
+
+        tabList.setText(getString(R.string.tab_list_title))
+                .setTabListener(
+                        new TabListener<EarthQuakeListFragment>
+                                (this, R.id.fragmentContainer, EarthQuakeListFragment.class));
+
+        actionBar.addTab(tabList);
+
+        //tab all earthquakes
+        ActionBar.Tab tabAllEarthquakes = actionBar.newTab();
+        tabList.setText(getString(R.string.tab_map_title))
+                .setTabListener(
+                        new TabListener<EarthquakeMapFragment>
+                                (this, R.id.fragmentContainer, EarthQuakeListFragment.class));
+
+
+        actionBar.addTab(tabList);
     }
 
 

@@ -46,7 +46,7 @@
         </service>
 
         <activity
-            android:name=".EarthquakeMapFragment"
+            android:name=".fragments.EarthquakeMapFragment"
             android:label="@string/title_activity_maps" >
         </activity>
     </application>

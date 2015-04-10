@@ -1,21 +1,13 @@
 package com.markelmendizabal.earthquakes;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.markelmendizabal.earthquakes.fragments.EarthQuakeListFragment;
+import com.markelmendizabal.earthquakes.fragments.EarthquakeMapFragment;
 import com.markelmendizabal.earthquakes.model.EarthQuake;
 
 import java.util.ArrayList;
@@ -37,9 +29,9 @@ public class DetailsActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        //lblPlace = (TextView) findViewById(R.id.place);
+        lblPlace = (TextView) findViewById(R.id.place);
         //lblDate= (TextView) findViewById(R.id.lblDate);
-        mapFragment=(EarthquakeMapFragment)getFragmentManager().findFragmentById(R.id.map);
+        mapFragment=(EarthquakeMapFragment)getFragmentManager().findFragmentById(R.id.mapa);
 
         Intent detailIntent = getIntent();
         earthQuake = detailIntent.getParcelableExtra(EarthQuakeListFragment.DETAIL_ITEM);
@@ -68,10 +60,6 @@ public class DetailsActivity extends FragmentActivity {
         super.onResume();
 
     }
-
-
-
-
 
 }
 

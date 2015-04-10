@@ -1,4 +1,4 @@
-package com.markelmendizabal.earthquakes;
+package com.markelmendizabal.earthquakes.fragments;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -47,20 +47,16 @@ public class EarthquakeMapFragment extends MapFragment implements GoogleMap.OnMa
 
     @Override
     public void onMapLoaded() {
-        mMap = getMap();
-        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
         LatLngBounds.Builder builder= new LatLngBounds.Builder();
-        //bound
 
         for (EarthQuake earthQuake : earthQuakes) {
             double lat = earthQuake.getCoords().getLat();
             double lng = earthQuake.getCoords().getLng();
 
-            mMap.addMarker(new MarkerOptions().position(new LatLng(lng, lat)).title(earthQuake.getPlace()).snippet(earthQuake.getUrl()));
+
             LatLng position = new LatLng(lng, lat);
-
-
             LatLng eartqueakeposition = new LatLng(earthQuake.getCoords().getLng(),
                     earthQuake.getCoords().getLat());
 
@@ -73,11 +69,11 @@ public class EarthquakeMapFragment extends MapFragment implements GoogleMap.OnMa
             builder.include(marker.getPosition());
             LatLngBounds bounds = builder.build();
 
-            /*CameraPosition camPos = new CameraPosition.Builder().target(position)
-                    .zoom(0)
+            CameraPosition camPos = new CameraPosition.Builder().target(position)
+                    .zoom(3)
                     .build();
             CameraUpdate camUpd = CameraUpdateFactory.newCameraPosition(camPos);
-            mMap.animateCamera(camUpd);*/
+            mMap.animateCamera(camUpd);
         }
         }
 }
