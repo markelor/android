@@ -21,32 +21,77 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.markelmendizabal.earthquakes.R;
+import com.markelmendizabal.earthquakes.abstracts.AbstractMapFragment;
 import com.markelmendizabal.earthquakes.fragments.EarthQuakeListFragment;
 import com.markelmendizabal.earthquakes.model.EarthQuake;
 
 import java.util.List;
 
-public class EarthquakeMapFragment extends MapFragment implements GoogleMap.OnMapLoadedCallback  {
+public class EarthquakeMapFragment extends AbstractMapFragment {
 
     private List<EarthQuake> earthQuakes;
-    private EarthQuake earthQuake;
-    private GoogleMap mMap;
+    private  EarthQuake earthQuake;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View layout=super.onCreateView(inflater, container, savedInstanceState);
-        mMap=getMap();
-        mMap.setOnMapLoadedCallback(this);
-        return layout;
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
-    public void setEarthQuakes(List<EarthQuake> earthQuakes) {
-        this.earthQuakes = earthQuakes;
+    @Override
+    protected void getData() {
+        //earthQuake = detailIntent.getParcelableExtra(EarthQuakeListFragment.DETAIL_ITEM);
+       earthQuake=getActivity().getIntent().getParcelableExtra(EarthQuakeListFragment.DETAIL_ITEM);
+       //earthQuakes=earthQuakeDB.getAll(id);
+
+
     }
+
+    @Override
+    protected void showMap() {
+        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+
+        LatLngBounds.Builder builder= new LatLngBounds.Builder();
+
+        for (EarthQuake earthQuake : earthQuakes) {
+            double lat = earthQuake.getCoords().getLat();
+            double lng = earthQuake.getCoords().getLng();
+
+
+            LatLng position = new LatLng(lng, lat);
+            LatLng eartqueakeposition = new LatLng(earthQuake.getCoords().getLng(),
+                    earthQuake.getCoords().getLat());
+
+            String Place = earthQuake.getPlace();
+            String Url = earthQuake.getUrl();
+            double Magnitude = earthQuake.getMagnitude();
+
+            MarkerOptions marker = new MarkerOptions().position(eartqueakeposition).title(Place).snippet(String.valueOf(Magnitude));
+            mMap.addMarker(marker);
+            builder.include(marker.getPosition());
+            LatLngBounds bounds = builder.build();
+
+           /* CameraPosition camPos = new CameraPosition.Builder().target(position)
+                    .zoom(3)
+                    .build();
+            CameraUpdate camUpd = CameraUpdateFactory.newCameraPosition(camPos);
+            mMap.animateCamera(camUpd);
+            */
+        }
+
+    }
+
+    /*public void setEarthQuakes(List<EarthQuake> earthQuakes) {
+        this.earthQuakes = earthQuakes;
+    }*/
 
 
     @Override
     public void onMapLoaded() {
+        super.onMapLoaded();
+    }
+
+    //@Override
+   /* public void onMapLoaded() {
         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
         LatLngBounds.Builder builder= new LatLngBounds.Builder();
@@ -76,4 +121,5 @@ public class EarthquakeMapFragment extends MapFragment implements GoogleMap.OnMa
             mMap.animateCamera(camUpd);
         }
         }
+        */
 }

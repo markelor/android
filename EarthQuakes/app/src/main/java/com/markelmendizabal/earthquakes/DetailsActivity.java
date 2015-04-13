@@ -16,13 +16,8 @@ import java.util.List;
 
 public class DetailsActivity extends FragmentActivity {
     private EarthQuake earthQuake;
-    private TextView _id;
     private TextView lblPlace;
-    private TextView lblDate;
-    private TextView time;
-    private TextView magnitude;
-    private TextView url;
-    private GoogleMap mMap;
+
     private EarthquakeMapFragment mapFragment;
 
     @Override
@@ -37,7 +32,6 @@ public class DetailsActivity extends FragmentActivity {
         earthQuake = detailIntent.getParcelableExtra(EarthQuakeListFragment.DETAIL_ITEM);
         populateView();
         showMapEarthquake(earthQuake);
-
 
     }
 

@@ -69,15 +69,6 @@ public class EarthQuakeListFragment extends ListFragment {
         View layout = super.onCreateView(inflater, container, savedInstanceState);
 
         aa = new EarthQuakeAdapter(getActivity(), R.layout.earthquake, arr);
-        if (savedInstanceState != null) {
-
-            ArrayList<EarthQuake> tmp = savedInstanceState.getParcelableArrayList(DETAIL_ITEM);
-            if (tmp != null) {
-
-                arr.addAll(tmp);
-            }
-        }
-
         setListAdapter(aa);
         return layout;
     }
@@ -86,7 +77,6 @@ public class EarthQuakeListFragment extends ListFragment {
     @Override
     public void onResume() {
         super.onResume();
-
         int minMag = Integer.parseInt(prefs.getString(getString(R.string.magnitude), "0"));
         arr.clear();
         arr.addAll(earthQuakeDB.getAllByMagnitude(minMag));

@@ -19,7 +19,6 @@ import com.markelmendizabal.earthquakes.tasks.DowloadEarthQuakesTask;
 public class MainActivity extends Activity implements DowloadEarthQuakesTask.AddEarthQuakeInterface {
 
     private static final int PREFS_ACTIVITY = 1;
-    private EarthQuakeDB eartQuakeDB;
     private final String EARTHQUAKE_PREFS="EARTHQUAKE_PREFS";
 
 
@@ -44,11 +43,11 @@ public class MainActivity extends Activity implements DowloadEarthQuakesTask.Add
 
         //tab all earthquakes
         ActionBar.Tab tabAllEarthquakes = actionBar.newTab();
-        tabList.setText(getString(R.string.tab_map_title))
+        tabAllEarthquakes.setText(getString(R.string.tab_map_title))
                 .setTabListener(
                         new TabListener<EarthquakeMapFragment>
                                 (this, R.id.fragmentContainer, EarthquakeMapFragment.class));
-        actionBar.addTab(tabList);
+        actionBar.addTab(tabAllEarthquakes);
     }
 
 
