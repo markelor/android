@@ -83,6 +83,8 @@ public class MainActivity extends Activity implements DowloadEarthQuakesTask.Add
         //Intent downdload = new Intent(this, DownloadEarthQuakesService.class);
         //startService(downdload);
         SharedPreferences prefs=getSharedPreferences(EARTHQUAKE_PREFS, Activity.MODE_PRIVATE);
+        //cuando se refresca el servicio salta la alarma
+        //si es la primera vez que lanzamos la aplicacion se activa, si no no
         if(!prefs.getBoolean("LAUNCHED_BEFORE",false)){
             long interval=getResources().getInteger(R.integer.default_integer)*60*1000;
             EarthQuakeAlarmManager.setAlarm(this,interval);
@@ -93,8 +95,8 @@ public class MainActivity extends Activity implements DowloadEarthQuakesTask.Add
 
     @Override
     public void notifyTotall(int total) {
-        String msg = getString(R.string.magnitude, total);
-        Toast toast = Toast.makeText(this, msg + total, Toast.LENGTH_LONG);
+        String msg = getString(R.string.num_earthquakes, total);
+        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
         toast.show();
 
     }

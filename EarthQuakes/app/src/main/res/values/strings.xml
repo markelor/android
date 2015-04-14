@@ -2,7 +2,7 @@
     <string name="app_name">EarthQuakes</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="earthquakeurl">http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson</string>
+    <string name="earthquakeurl">http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson</string>
     <string name="title_activity_details">Details</string>
     <string name="num_earthquakes">%d earthquakes processed</string>
     <string name="title_activity_settings">Settings</string>
@@ -22,6 +22,7 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="tab_list_title">Earquakes List</string>
     <string name="tab_map_title">Earquakes Map</string>
+    <string name="action_refresh">refresh</string>
 
 
 </resources>

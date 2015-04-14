@@ -6,6 +6,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -13,9 +16,11 @@ import android.widget.ListView;
 
 import com.markelmendizabal.earthquakes.DetailsActivity;
 import com.markelmendizabal.earthquakes.R;
+import com.markelmendizabal.earthquakes.SettingsActivity;
 import com.markelmendizabal.earthquakes.adapter.EarthQuakeAdapter;
 import com.markelmendizabal.earthquakes.database.EarthQuakeDB;
 import com.markelmendizabal.earthquakes.model.EarthQuake;
+import com.markelmendizabal.earthquakes.services.DownloadEarthQuakesService;
 
 import org.json.JSONObject;
 
@@ -64,10 +69,12 @@ public class EarthQuakeListFragment extends ListFragment {
 */
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = super.onCreateView(inflater, container, savedInstanceState);
-
+        setHasOptionsMenu(true);
         aa = new EarthQuakeAdapter(getActivity(), R.layout.earthquake, arr);
         setListAdapter(aa);
         return layout;
@@ -93,6 +100,23 @@ public class EarthQuakeListFragment extends ListFragment {
         startActivity(detailIntent);
 
     }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_refresh,menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_referesh) {
+            Intent download = new Intent(getActivity(), DownloadEarthQuakesService.class);
+            getActivity().startService(download);
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -1,10 +1,16 @@
 package com.markelmendizabal.earthquakes.services;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.RingtoneManager;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.markelmendizabal.earthquakes.MainActivity;
 import com.markelmendizabal.earthquakes.R;
 import com.markelmendizabal.earthquakes.database.EarthQuakeDB;
 import com.markelmendizabal.earthquakes.model.Coordinate;
@@ -74,7 +80,7 @@ public class DownloadEarthQuakesService extends Service {
                     processEarthQuakeTask(earthquakes.getJSONObject(i));
                 }
             }
-
+            sendNotification(count);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -87,6 +93,31 @@ public class DownloadEarthQuakesService extends Service {
         }
         return count;
     }
+
+    private void sendNotification(Integer count) {
+        Intent intentToFire= new Intent(this, MainActivity.class);
+        PendingIntent activytyIntent=PendingIntent.getActivity(this,0,intentToFire,0);
+        Notification.Builder builder	=
+                new	Notification.Builder(DownloadEarthQuakesService.this);
+        builder.setSmallIcon(R.drawable.ic_launcher)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(getString(R.string.num_earthquakes,count))
+                .setWhen(System.currentTimeMillis())
+                .setDefaults(Notification.DEFAULT_SOUND)
+                .setSound(
+                        RingtoneManager.getDefaultUri(
+                                RingtoneManager.TYPE_NOTIFICATION))
+                .setContentIntent(activytyIntent)
+                .setAutoCancel(true);
+
+        Notification	notification	=	builder.build();
+        NotificationManager notificationManager =(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+        int	NOTIFICATION_REF	=	1;
+        notificationManager.notify(NOTIFICATION_REF,notification);
+    }
+
+
 
     private void processEarthQuakeTask(JSONObject jsonObject) {
         try {
