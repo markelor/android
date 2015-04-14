@@ -32,45 +32,42 @@ public class EarthquakeMapFragment extends AbstractMapFragment {
     private List<EarthQuake> earthQuakes;
     private  EarthQuake earthQuake;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
 
     @Override
     protected void getData() {
         //earthQuake = detailIntent.getParcelableExtra(EarthQuakeListFragment.DETAIL_ITEM);
        earthQuake=getActivity().getIntent().getParcelableExtra(EarthQuakeListFragment.DETAIL_ITEM);
        //earthQuakes=earthQuakeDB.getAll(id);
-
+Log.d("aaa",earthQuake.getPlace());
 
     }
 
     @Override
     protected void showMap() {
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        MarkerOptions marker = crearMarker(earthQuake);
 
-        for (EarthQuake earthQuake : earthQuakes) {
+        getMap().addMarker(marker);
 
-            LatLng eartqueakeposition = new LatLng(earthQuake.getCoords().getLng(),
-                    earthQuake.getCoords().getLat());
+        CameraPosition camPos = new CameraPosition.Builder().target(marker.getPosition())
+                .zoom(5)
+                .build();
 
-            String Place = earthQuake.getPlace();
-            String Url = earthQuake.getUrl();
-            double Magnitude = earthQuake.getMagnitude();
-            getMap().setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        CameraUpdate camUpd = CameraUpdateFactory.newCameraPosition(camPos);
 
-            MarkerOptions marker = new MarkerOptions().position(eartqueakeposition).title(Place).snippet(String.valueOf(Magnitude));
-            getMap().addMarker(marker);
-            builder.include(marker.getPosition());
-
-        }
-        LatLngBounds bounds = builder.build();
+        getMap().animateCamera(camUpd);
     }
 
-    public void setEarthQuakes(List<EarthQuake> earthQuakes) {
+ /*  public void setEarthQuakes(List<EarthQuake> earthQuakes) {
         this.earthQuakes = earthQuakes;
     }
+    */
+
 
 
 

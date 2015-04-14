@@ -31,14 +31,14 @@ public class DetailsActivity extends FragmentActivity {
         Intent detailIntent = getIntent();
         earthQuake = detailIntent.getParcelableExtra(EarthQuakeListFragment.DETAIL_ITEM);
         populateView();
-        showMapEarthquake(earthQuake);
+        //showMapEarthquake(earthQuake);
 
     }
 
     private void showMapEarthquake(EarthQuake earthQuake) {
         List<EarthQuake> earthQeakes=new ArrayList<EarthQuake>();
         earthQeakes.add(earthQuake);
-       mapFragment.setEarthQuakes(earthQeakes);
+      //mapFragment.setEarthQuakes(earthQeakes);
 
     }
 

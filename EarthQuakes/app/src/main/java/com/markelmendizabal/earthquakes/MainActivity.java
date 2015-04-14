@@ -10,6 +10,7 @@ import android.widget.Toast;
 import android.app.ActionBar;
 import com.markelmendizabal.earthquakes.database.EarthQuakeDB;
 import com.markelmendizabal.earthquakes.fragments.EarthQuakeListFragment;
+import com.markelmendizabal.earthquakes.fragments.EarthQuakeListMapFragment;
 import com.markelmendizabal.earthquakes.fragments.EarthquakeMapFragment;
 import com.markelmendizabal.earthquakes.listeners.TabListener;
 import com.markelmendizabal.earthquakes.managers.EarthQuakeAlarmManager;
@@ -19,7 +20,9 @@ import com.markelmendizabal.earthquakes.tasks.DowloadEarthQuakesTask;
 public class MainActivity extends Activity implements DowloadEarthQuakesTask.AddEarthQuakeInterface {
 
     private static final int PREFS_ACTIVITY = 1;
-    private final String EARTHQUAKE_PREFS="EARTHQUAKE_PREFS";
+    private final String EARTHQUAKE_PREFS="EARTHQUAKE_PREFS";private ActionBar actionBar;
+    private	static final String	SELECTED_TAB_KEY = "SELECTED_TAB_KEY";
+
 
 
     @Override
@@ -30,7 +33,7 @@ public class MainActivity extends Activity implements DowloadEarthQuakesTask.Add
         DowloadEarthQuakesTask task = new DowloadEarthQuakesTask(this, this);
         task.execute(getString(R.string.earthquakeurl));
         checkToSetAlarm();
-        android.app.ActionBar actionBar=getActionBar();
+        actionBar=getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         ActionBar.Tab tabList = actionBar.newTab();
 
@@ -45,8 +48,8 @@ public class MainActivity extends Activity implements DowloadEarthQuakesTask.Add
         ActionBar.Tab tabAllEarthquakes = actionBar.newTab();
         tabAllEarthquakes.setText(getString(R.string.tab_map_title))
                 .setTabListener(
-                        new TabListener<EarthquakeMapFragment>
-                                (this, R.id.fragmentContainer, EarthquakeMapFragment.class));
+                        new TabListener<EarthQuakeListMapFragment>
+                                (this, R.id.fragmentContainer, EarthQuakeListMapFragment.class));
         actionBar.addTab(tabAllEarthquakes);
     }
 
@@ -94,5 +97,21 @@ public class MainActivity extends Activity implements DowloadEarthQuakesTask.Add
         Toast toast = Toast.makeText(this, msg + total, Toast.LENGTH_LONG);
         toast.show();
 
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        outState.putInt(SELECTED_TAB_KEY, actionBar.getSelectedNavigationIndex());
+        super.onSaveInstanceState(outState);
+    }
+
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+
+        if	(savedInstanceState	!=	null && savedInstanceState.containsKey(SELECTED_TAB_KEY))
+            actionBar.setSelectedNavigationItem(savedInstanceState.getInt(SELECTED_TAB_KEY));
+
+        super.onRestoreInstanceState(savedInstanceState);
     }
 }

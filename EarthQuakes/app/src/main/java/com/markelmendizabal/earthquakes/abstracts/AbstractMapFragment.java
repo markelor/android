@@ -29,6 +29,21 @@ import java.util.List;
 public abstract class AbstractMapFragment extends MapFragment implements GoogleMap.OnMapLoadedCallback  {
     //protected no es visible hacia fuera pero si para sus hijos
     protected EarthQuakeDB earthQuakeDB;
+    protected List<EarthQuake>earthQuakes;
+    protected GoogleMap mapa;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupMapIfNeeded();
+        getMap().setOnMapLoadedCallback(this);
+    }
+
+    private void setupMapIfNeeded() {
+        if(mapa==null){
+            mapa=getMap();
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +55,6 @@ public abstract class AbstractMapFragment extends MapFragment implements GoogleM
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout= super.onCreateView(inflater, container, savedInstanceState);
-        getMap().setOnMapLoadedCallback(this);
         return  layout;
     }
 
@@ -51,6 +65,19 @@ public abstract class AbstractMapFragment extends MapFragment implements GoogleM
     public void onMapLoaded() {
         this.getData();
         this.showMap();
+    }
+    protected MarkerOptions crearMarker(EarthQuake earthQuake) {
+        LatLng point = new LatLng(
+                earthQuake.getCoords().getLng(),
+                earthQuake.getCoords().getLat()
+        );
+
+        MarkerOptions marker = new MarkerOptions()
+                .position(point)
+                .title(earthQuake.getPlace())
+                .snippet(String.valueOf(earthQuake.getMagnitude()));
+
+        return marker;
     }
     }
 
