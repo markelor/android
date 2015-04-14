@@ -29,8 +29,6 @@ import java.util.List;
 public abstract class AbstractMapFragment extends MapFragment implements GoogleMap.OnMapLoadedCallback  {
     //protected no es visible hacia fuera pero si para sus hijos
     protected EarthQuakeDB earthQuakeDB;
-    protected GoogleMap mMap;
-    protected List<EarthQuake> earthQuakes;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,9 +44,6 @@ public abstract class AbstractMapFragment extends MapFragment implements GoogleM
         return  layout;
     }
 
-    public void setEarthQuakes(List<EarthQuake> earthQuakes) {
-        this.earthQuakes = earthQuakes;
-    }
     abstract protected void getData();
 
     abstract protected void showMap();

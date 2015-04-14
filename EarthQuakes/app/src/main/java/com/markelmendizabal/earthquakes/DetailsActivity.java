@@ -38,7 +38,7 @@ public class DetailsActivity extends FragmentActivity {
     private void showMapEarthquake(EarthQuake earthQuake) {
         List<EarthQuake> earthQeakes=new ArrayList<EarthQuake>();
         earthQeakes.add(earthQuake);
-        mapFragment.setEarthQuakes(earthQeakes);
+       mapFragment.setEarthQuakes(earthQeakes);
 
     }
 

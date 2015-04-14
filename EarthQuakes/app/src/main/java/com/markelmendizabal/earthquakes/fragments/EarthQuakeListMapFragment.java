@@ -40,23 +40,20 @@ public class EarthQuakeListMapFragment extends AbstractMapFragment {
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
         for (EarthQuake earthQuake : earthQuakes) {
-            double lat = earthQuake.getCoords().getLat();
-            double lng = earthQuake.getCoords().getLng();
 
-
-            LatLng position = new LatLng(lng, lat);
             LatLng eartqueakeposition = new LatLng(earthQuake.getCoords().getLng(),
                     earthQuake.getCoords().getLat());
 
             String Place = earthQuake.getPlace();
             String Url = earthQuake.getUrl();
             double Magnitude = earthQuake.getMagnitude();
+            getMap().setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
             MarkerOptions marker = new MarkerOptions().position(eartqueakeposition).title(Place).snippet(String.valueOf(Magnitude));
-            mMap.addMarker(marker);
+            getMap().addMarker(marker);
             builder.include(marker.getPosition());
-            LatLngBounds bounds = builder.build();
 
         }
+        LatLngBounds bounds = builder.build();
     }
 }
